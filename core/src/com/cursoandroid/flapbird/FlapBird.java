@@ -14,6 +14,8 @@ public class FlapBird extends ApplicationAdapter {
     private int largura;
     private int altura;
 	private float variacao =0;
+	private float velocidadeQueda =0;
+	private float posicaoInicialVertical =0;
 
 	@Override
 	public void create () {
@@ -29,17 +31,35 @@ public class FlapBird extends ApplicationAdapter {
 
 	    largura = Gdx.graphics.getWidth();
 	    altura = Gdx.graphics.getHeight();
+        posicaoInicialVertical = altura/2;
 	}
 
 	@Override
 	public void render () {
 
-	    variacao += 0.1;
+	    //Velocidade da animação
+	    variacao += Gdx.graphics.getDeltaTime() * 5;
+
+        velocidadeQueda++;
+
+        //Não deixa a variação de img passar de 2 (0,1,2)
 	    if (variacao > 2) variacao = 0;
+
+        //Evento touch
+        if(Gdx.input.justTouched())
+            velocidadeQueda = -20;
+
+
+	    //Velocidade de queda
+
+        if (posicaoInicialVertical > 0 || velocidadeQueda < 0)
+            posicaoInicialVertical += -velocidadeQueda;
+
+
 	    batch.begin();
 
 	    batch.draw(fundo,0,0,largura,altura);
-	    batch.draw(passaro[(int)variacao],300,altura/2,280,188);
+	    batch.draw(passaro[(int)variacao],30,posicaoInicialVertical,280,188);
 
 	    batch.end();
 
