@@ -9,18 +9,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class FlapBird extends ApplicationAdapter {
 
 	private SpriteBatch batch;
-	private Texture passaro;
+	private Texture[] passaro;
     private Texture fundo;
     private int largura;
     private int altura;
-	private int movimento =0;
+	private float variacao =0;
 
 	@Override
 	public void create () {
 
 	    batch = new SpriteBatch();
-	    passaro = new Texture("passaro1.png");
-	    fundo = new Texture("fundo.png");
+	    passaro = new Texture[3];
+	    passaro[0] = new Texture("passaro1.png");
+        passaro[1] = new Texture("passaro2.png");
+        passaro[2] = new Texture("passaro3.png");
+
+        fundo = new Texture("fundo.png");
+
 
 	    largura = Gdx.graphics.getWidth();
 	    altura = Gdx.graphics.getHeight();
@@ -29,11 +34,12 @@ public class FlapBird extends ApplicationAdapter {
 	@Override
 	public void render () {
 
-	    movimento++;
+	    variacao += 0.1;
+	    if (variacao > 2) variacao = 0;
 	    batch.begin();
 
 	    batch.draw(fundo,0,0,largura,altura);
-	    batch.draw(passaro,movimento,0,280,188);
+	    batch.draw(passaro[(int)variacao],300,altura/2,280,188);
 
 	    batch.end();
 
