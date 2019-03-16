@@ -35,19 +35,19 @@ public class FlapBird extends ApplicationAdapter {
         batch = new SpriteBatch();
         numeroRandomico = new Random();
         passaros = new Texture[3];
-        passaros[0] = new Texture("passaro1.png");
-        passaros[1] = new Texture("passaro2.png");
-        passaros[2] = new Texture("passaro3.png");
+        passaros[0] = new Texture("passaro1_2.png");
+        passaros[1] = new Texture("passaro2_2.png");
+        passaros[2] = new Texture("passaro3_2.png");
 
         fundo = new Texture("fundo.png");
-        canoBaixo = new Texture("cano_baixo_maior.png");
-        canoTopo = new Texture("cano_topo_maior.png");
+        canoBaixo = new Texture("cano_baixo_2.png");
+        canoTopo = new Texture("cano_topo_2.png");
 
         larguraDispositivo = Gdx.graphics.getWidth();
         alturaDispositivo  = Gdx.graphics.getHeight();
         posicaoInicialVertical = alturaDispositivo / 2;
         posicaoMovimentoCanoHorizontal = larguraDispositivo;
-        espacoEntreCanos = 300;
+        espacoEntreCanos = 600;
 
     }
 
