@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
 
@@ -18,6 +21,10 @@ public class FlapBird extends ApplicationAdapter {
     private Texture canoTopo;
     private Random numeroRandomico;
     private BitmapFont fonte;
+    private Circle passaroCirculo;
+    private Rectangle canoTopoRetangulo;
+    private Rectangle canoBaixoRetangulo;
+    private ShapeRenderer shapeRenderer;
 
     //Atributos de configuracao
     private int larguraDispositivo;
@@ -40,6 +47,10 @@ public class FlapBird extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         numeroRandomico = new Random();
+        passaroCirculo = new Circle();
+        canoTopoRetangulo = new Rectangle();
+        canoBaixoRetangulo = new Rectangle();
+        shapeRenderer = new ShapeRenderer();
 
         fonte = new BitmapFont();
         fonte.setColor(Color.WHITE);
@@ -110,12 +121,20 @@ public class FlapBird extends ApplicationAdapter {
 
         batch.draw(fundo, 0, 0, larguraDispositivo, alturaDispositivo);
         batch.draw( canoTopo, posicaoMovimentoCanoHorizontal, alturaDispositivo / 2 + espacoEntreCanos / 2 + alturaEntreCanosRandomica );
-        batch.draw(canoBaixo, posicaoMovimentoCanoHorizontal, alturaDispositivo / 2- canoBaixo.getHeight() - espacoEntreCanos / 2 + alturaEntreCanosRandomica );
+        batch.draw(canoBaixo, posicaoMovimentoCanoHorizontal, alturaDispositivo / 2 - canoBaixo.getHeight() - espacoEntreCanos / 2 + alturaEntreCanosRandomica );
         batch.draw( passaros[ (int) variacao ] , 120, posicaoInicialVertical );
         fonte.draw(batch, String.valueOf(pontuacao),larguraDispositivo / 2 - 50,alturaDispositivo - 50 );
 
+        passaroCirculo.set(120 + passaros[0].getWidth() / 2, posicaoInicialVertical + passaros[0].getHeight() / 2, passaros[0].getWidth() /2 );
 
         batch.end();
+
+        //Desenhar Formas de colisão
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.circle(passaroCirculo.x,passaroCirculo.y,passaroCirculo.radius);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.end();
+
 
     }
 }
