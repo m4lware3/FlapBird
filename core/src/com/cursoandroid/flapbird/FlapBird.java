@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.Random;
@@ -24,7 +25,7 @@ public class FlapBird extends ApplicationAdapter {
     private Circle passaroCirculo;
     private Rectangle canoTopoRetangulo;
     private Rectangle canoBaixoRetangulo;
-    private ShapeRenderer shapeRenderer;
+    //private ShapeRenderer shapeRenderer;
 
     //Atributos de configuracao
     private int larguraDispositivo;
@@ -48,9 +49,9 @@ public class FlapBird extends ApplicationAdapter {
         batch = new SpriteBatch();
         numeroRandomico = new Random();
         passaroCirculo = new Circle();
-        canoTopoRetangulo = new Rectangle();
-        canoBaixoRetangulo = new Rectangle();
-        shapeRenderer = new ShapeRenderer();
+        //canoTopoRetangulo = new Rectangle();
+        //canoBaixoRetangulo = new Rectangle();
+        //shapeRenderer = new ShapeRenderer();
 
         fonte = new BitmapFont();
         fonte.setColor(Color.WHITE);
@@ -126,14 +127,26 @@ public class FlapBird extends ApplicationAdapter {
         fonte.draw(batch, String.valueOf(pontuacao),larguraDispositivo / 2 - 50,alturaDispositivo - 50 );
 
         passaroCirculo.set(120 + passaros[0].getWidth() / 2, posicaoInicialVertical + passaros[0].getHeight() / 2, passaros[0].getWidth() /2 );
+        canoBaixoRetangulo = new Rectangle(posicaoMovimentoCanoHorizontal,alturaDispositivo / 2 - canoBaixo.getHeight() - espacoEntreCanos / 2 + alturaEntreCanosRandomica,
+                canoBaixo.getWidth(),canoBaixo.getHeight());
+        canoTopoRetangulo = new Rectangle(posicaoMovimentoCanoHorizontal,alturaDispositivo / 2 + espacoEntreCanos / 2 + alturaEntreCanosRandomica,
+                canoTopo.getWidth(),canoTopo.getHeight());
+
 
         batch.end();
 
         //Desenhar Formas de colisão
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.circle(passaroCirculo.x,passaroCirculo.y,passaroCirculo.radius);
+        shapeRenderer.rect(canoBaixoRetangulo.x,canoBaixoRetangulo.y,canoBaixoRetangulo.width,canoBaixoRetangulo.height);
+        shapeRenderer.rect(canoTopoRetangulo.x,canoTopoRetangulo.y,canoTopoRetangulo.width,canoTopoRetangulo.height);
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.end();
+        shapeRenderer.end();*/
+
+        //Teste de colisão
+        if(Intersector.overlaps(passaroCirculo, canoBaixoRetangulo) || Intersector.overlaps(passaroCirculo,canoTopoRetangulo)){
+            Gdx.app.log("Colisão", "Houve Colisão");
+        }
 
 
     }
